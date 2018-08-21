@@ -1,6 +1,6 @@
 import { Epic, combineEpics } from 'redux-observable'
-import { of, EMPTY, from } from 'rxjs'
-import { mergeMap, map, delay } from 'rxjs/operators'
+import { of, EMPTY } from 'rxjs'
+import { mergeMap, delay } from 'rxjs/operators'
 import {
     closeNotification,
     ITriggerNotificationAction,

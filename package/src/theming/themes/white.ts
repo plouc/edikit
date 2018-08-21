@@ -1,4 +1,3 @@
-import 'brace/theme/github'
 import { css } from 'styled-components'
 import { ITheme, IThemeColors, IThemeTypography } from '../types'
 

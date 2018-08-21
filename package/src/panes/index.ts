@@ -1,3 +1,5 @@
 export * from './types'
 export * from './store'
+export * from './operations'
 export { default as createPaneManager } from './createPaneManager'
+export { default as PaneManager } from './components/PaneManager'

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "../wiremock-ui/node_modules/edikit/dist",
+    "outDir": "dist",
     "module": "commonjs",
     "target": "es5",
     "lib": ["es7", "dom"],
@@ -23,6 +23,14 @@
     "./src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "./src/**/*.spec.ts",
+    "./src/**/*.spec.tsx"
   ]
 }

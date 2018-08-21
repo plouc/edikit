@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled, { withTheme } from 'styled-components'
-import { ITheme } from 'edikit'
+import { ITheme } from '../../theming'
 
 interface IContainerProps {
     withLink: boolean

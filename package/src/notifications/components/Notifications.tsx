@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     left: 32px;
 `
 
-interface INotificationsProps {
+export interface INotificationsProps {
     notifications: INotification[]
 }
 

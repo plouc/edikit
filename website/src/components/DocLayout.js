@@ -53,7 +53,13 @@ code, pre {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.gatsby-highlight {
+code:not([class*="language-"]) {
+    background: #dae4f9;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+pre {
   background: ${colors.dark};
   color: ${colors.white};
   border-radius: 10;
@@ -61,17 +67,15 @@ code, pre {
   tab-size: 1.5em;
 }
 
-.gatsby-highlight code[class*="language-"],
-.gatsby-highlight pre[class*="language-"],
-.gatsby-highlight pre.prism-code {
+pre > code[class*="language-"] {
     margin: 1rem;
     font-size: 12px !important;
-    line-height: 19px !important;
+    line-height: 17px !important;
     white-space: pre-wrap;
     word-break: break-word;
 }
 
-.gatsby-highlight + .gatsby-highlight {
+pre + pre {
   margin-top: 20px;
 }
 

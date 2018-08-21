@@ -1,0 +1,132 @@
+import PanesDemo from '../../../components/demos/Panes'
+
+# Panes
+
+[models](#models) | 
+[content types](#content-types) | 
+[operations](#operations) | 
+[redux integration](#redux-integration) | 
+[pane manager](#pane-manager)
+
+Panes helps arranging your app into several views, they can be split and resized.
+
+<PanesDemo/>
+
+## Models
+
+The pane system is built upon two models: `Pane` and `PaneContent`.
+
+```typescript
+interface IPane<Data> {
+    id:         string        // unique identifier of the pane
+    isCurrent:  boolean
+    split:      boolean
+    splitAxis?: PaneSplitAxis // 'vertical' or 'horizontal'
+    childOf?:   string        // parent pane id
+    children:   string[]      // ids of child panes
+    contents:   Array<IPaneContent<Data>>
+}
+
+interface IPaneContent<Data> {
+    id:        string
+    type:      string  // id of the content type used for rendering
+    isCurrent: boolean
+    isUnique:  boolean
+    data?:     Data
+}
+```
+
+## Content types
+
+Content types define how a pane content should be rendered and must expose:
+
+- An **id** used to identify the content type, e.g. `settings` could be used
+  for a content type rendering a settings control pane.
+  This is what you'll use for the `type` property of pane contents.
+- A **renderButton** function used to render the content's button label used in pane header,
+  it will receive the rendering context.
+- A **renderIcon** function used to render the content's icon in pane header,
+  it will also receive the rendering context.
+- And the most important one, the **renderPane** function used to render the content itself,
+  it will also receive the rendering context.  
+
+Definitions:
+
+```typescript
+interface IContentRenderContext<Data> {
+    content: IPaneContent<Data>
+    pane:    IPane<Data>
+    extra: {
+        close: () => void
+    }
+}
+
+interface IContentType<Data> {
+    id: string
+    renderButton: (context: IContentRenderContext<Data>) => React.ReactNode
+    renderIcon:   (context: IContentRenderContext<Data>) => React.ReactNode
+    renderPane:   (context: IContentRenderContext<Data>) => React.ReactNode
+}
+```
+
+## Operations
+
+When working with panes, you'll deal with an array of pane items, and render the top pane
+(the one without any parent) which will then handle the rendering of the whole tree.
+Manipulating this collection of pane can be tedious, and for optimal performance,
+we must keep it immutable, that's why **edikit** provides helpers (aka. operations)
+which ease the process:
+
+| operation                 | description
+|---------------------------|---------------------------------
+| `addContentToCurrentPane` | Append a content to current pane and set it as current content
+| `setPaneCurrentContent`   | Set an existing pane content as current
+| `setCurrentPane`          | Set pane as current
+| `removePaneContent`       | Remove a pane's content
+| `splitPane`               | Split a pane into two sub panes
+
+If you plan to use **edikit** without redux, you can use a top component, store panes
+inside its state and bind operations to this component:
+
+```javascript
+class MyCustomPaneManager extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            panes: [{
+                id: 'root',
+                isCurrent: true,
+                contents: [],
+                split: false,
+                splitAxis: 'vertical',
+                children: [],
+            }]
+        }
+    }
+
+    setCurrentPane = paneId => {
+        this.setState({
+            panes: setCurrentPane(this.state.panes, paneId),
+        })
+    }
+
+    // you can use the same approach for all other operations 
+
+    render() {
+        return (
+            <PaneManager
+                panes={this.state.panes}
+                root={this.state.panes.find(pane => pane.childOf === undefined)}
+                contentTypes={contentTypes}
+                setCurrentPane={this.setCurrentPane}
+                // other bound operations
+            />
+        )
+    }
+}
+```
+
+## Redux integration
+
+## Pane manager

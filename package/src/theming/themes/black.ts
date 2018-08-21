@@ -1,6 +1,5 @@
-import 'brace/theme/chaos'
+import { css } from 'styled-components'
 import { ITheme, IThemeColors, IThemeTypography } from '../types'
-import {css} from "styled-components";
 
 const typography: IThemeTypography = {
     fontSize: '14px',
