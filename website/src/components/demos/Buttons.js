@@ -11,7 +11,7 @@ const Grid = styled.div`
 `
 
 export default () => (
-    <ThemableDemo>
+    <ThemableDemo usePaneBackground={true}>
         <Grid>
             <Button variant="default" style={{ marginRight: 9 }}>
                 default

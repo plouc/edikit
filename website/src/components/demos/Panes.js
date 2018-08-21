@@ -122,7 +122,7 @@ export default class PanesDemo extends React.Component {
 
     render() {
         return (
-            <ThemableDemo>
+            <ThemableDemo disableContentPadding={true}>
                 <Container>
                     <PaneManager
                         init={() => {}}

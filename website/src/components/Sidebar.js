@@ -5,7 +5,7 @@ import { rhythm } from '../utils/typography'
 
 const Wrapper = styled.div`
     position: fixed;
-    width: calc(${rhythm(10)} - 1px);
+    width: ${rhythm(10)};
     top: ${rhythm(2)};
     bottom: 0;
     left: 0;

@@ -56,13 +56,10 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
-    "_make-bundle": "node scripts/bundle",
     "ts:watch": "tsc --watch",
     "ts:check": "tsc -p ./tsconfig.json --noEmit",
     "ts:build": "tsc -p ./tsconfig.json",
     "ts:build:prod": "tsc -p ./tsconfig.prod.json",
-    "build": "npm-run-all clean ts:build:prod",
-    "cp": "mkdir -p ~/projects/wiremock-ui/node_modules/edikit && cp package.json ~/projects/wiremock-ui/node_modules/edikit && cp -r ./dist ~/projects/wiremock-ui/node_modules/edikit",
-    "dev": "yarn run build && yarn pack && cd ../wiremock-ui && yarn add ../edikit/edikit-v1.0.0-alpha.0.tgz && cd ../edikit"
+    "build": "npm-run-all clean ts:build:prod"
   }
 }

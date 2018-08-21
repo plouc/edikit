@@ -9,7 +9,7 @@ const Container = styled.div`
 `
 
 export default () => (
-    <ThemableDemo>
+    <ThemableDemo disableContentPadding={true}>
         <Container>
             <Notifications
                 notifications={[

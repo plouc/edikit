@@ -9,10 +9,10 @@ const themes = {
 }
 
 const Header = styled.div`
-    height: 46px;
+    height: 36px;
     display: flex;
     justify-content: flex-start;
-    padding: 0 16px;
+    padding: 0 18px;
     align-items: center;
     font-size: 13px;
     border-radius: 3px 3px 0 0;
@@ -21,18 +21,22 @@ const Header = styled.div`
 `
 
 const ThemeLabel = styled.span`
+    height: 36px;
     margin-right: 12px;
     cursor: pointer;
     color: ${props => props.theme.colors.text};
-    height: 22px;
+    display: flex;
+    align-items: center;
 `
 
 const ThemeButton = styled.span`
+    height: 36px;
     position: relative;
+    display: flex;
+    align-items: center;
     margin-right: 12px;
     cursor: pointer;
     color: ${props => props.isActive ? props.theme.colors.text : props.theme.colors.muted};
-    height: 22px;
 
     &:after {
         content: "";
@@ -48,14 +52,19 @@ const ThemeButton = styled.span`
 `
 
 const Container = styled.div`
-    background: ${props => props.theme.colors.background};
+    background: ${props => props.usePaneBackground ? props.theme.pane.body.background : props.theme.colors.background};
     color: ${props => props.theme.colors.text};
     overflow: hidden;
-    padding: 9px 12px 22px 12px;
+    padding: ${props => props.disableContentPadding ? 0 : '16px 12px 16px 12px'};
     border-radius: 0 0 3px 3px;
 `
 
 export default class ThemableDemo extends React.Component {
+    static defaultProps = {
+        usePaneBackground: false,
+        disableContentPadding: false,
+    }
+
     constructor(props) {
         super(props)
 
@@ -67,6 +76,7 @@ export default class ThemableDemo extends React.Component {
     }
 
     render() {
+        const { usePaneBackground, disableContentPadding} = this.props
         const theme = themes[this.state.theme]
 
         return (
@@ -95,7 +105,10 @@ export default class ThemableDemo extends React.Component {
                             white
                         </ThemeButton>
                     </Header>
-                    <Container>
+                    <Container
+                        usePaneBackground={usePaneBackground}
+                        disableContentPadding={disableContentPadding}
+                    >
                         {this.props.children}
                     </Container>
                 </div>
