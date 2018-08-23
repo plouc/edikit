@@ -1,5 +1,5 @@
 import { injectGlobal } from 'styled-components'
-import './prism-style'
+import prism from './prism-style'
 
 injectGlobal`
 body {
@@ -15,13 +15,15 @@ a {
 }
 
 code, pre {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-code:not([class*="language-"]) {
+code {
     background: #b6f1e2;
     padding: 2px 6px;
     border-radius: 2px;
 }
+
+${prism}
 `
 

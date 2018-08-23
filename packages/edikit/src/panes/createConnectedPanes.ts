@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import PaneManager from './components/PaneManager'
+import RootPane from './components/RootPane'
 import { actionsFactory, IPanesState } from './store'
 import { IPaneContent, IContentType, PaneSplitAxis } from './types'
 
@@ -14,17 +14,15 @@ export default <AppState, Data>({
     const actions = actionsFactory<Data>(namespace)
 
     const mapStateToProps = ({
-        panes
+        panes,
     }: AppState & {
         panes: IPanesState<Data>
     }) => {
         const entry = panes[namespace]
 
         return {
-            namespace,
-            root: entry === undefined ? undefined : entry.panes.find(pane => pane.childOf === undefined),
             panes: entry === undefined ? [] : entry.panes,
-            contentTypes
+            contentTypes,
         }
     }
 
@@ -52,10 +50,10 @@ export default <AppState, Data>({
         },
     })
 
-    class NameSpacedPaneManager extends PaneManager<Data> {}
+    class NameSpacedRootPane extends RootPane<Data> {}
 
     return connect(
         mapStateToProps,
         mapDispatchToProps
-    )(NameSpacedPaneManager)
+    )(NameSpacedRootPane)
 }

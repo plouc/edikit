@@ -6,14 +6,12 @@ import {
     PaneSplitAxis
 } from '../types'
 import Pane from './Pane'
-import { Container } from './PaneManager_styled'
+import { Container } from './RootPane_styled'
 
-export interface IPaneManagerProps<Data> {
-    namespace: string
-    root?: IPane<Data>
+export interface IRootPaneProps<Data> {
     panes: Array<IPane<Data>>
     contentTypes: Array<IContentType<Data>>
-    init: () => void
+    init?: () => void
     setCurrentPane: (
         paneId: string
     ) => void
@@ -34,14 +32,15 @@ export interface IPaneManagerProps<Data> {
     ) => void
 }
 
-export default class PaneManager<Data> extends React.Component<IPaneManagerProps<Data>> {
+export default class RootPane<Data> extends React.Component<IRootPaneProps<Data>> {
     componentDidMount() {
-        this.props.init()
+        if (this.props.init !== undefined) {
+            this.props.init()
+        }
     }
 
     render() {
         const {
-            root,
             panes,
             contentTypes,
             setCurrentPane,
@@ -50,6 +49,7 @@ export default class PaneManager<Data> extends React.Component<IPaneManagerProps
             splitPane,
         } = this.props
 
+        const root = panes.find(pane => pane.childOf === undefined)
         if (root === undefined) return null
 
         return (

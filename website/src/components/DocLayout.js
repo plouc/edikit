@@ -15,13 +15,14 @@ const Content = styled.div`
 `
 
 const InnerContent = styled.div`
-    max-width: 840px;
+    max-width: 860px;
     margin: 0 auto;
     padding: ${rhythm(2)} ${rhythm(1)};
+    min-height: 600px;
 `
 
 export default ({ children }) => (
-    <div>
+    <React.Fragment>
         <Header/>
         <Container>
             <Content>
@@ -30,7 +31,7 @@ export default ({ children }) => (
                 </InnerContent>
                 <Footer/>
             </Content>
-            <Sidebar/>
         </Container>
-    </div>
+        <Sidebar/>
+    </React.Fragment>
 )

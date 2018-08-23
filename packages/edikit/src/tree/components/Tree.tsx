@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Container } from './Tree_styled'
 import TreeNode from './TreeNode'
-import { ITreeNode as Node, TreeClickHandler, TreeIconGetter } from '../'
+import { ITreeNode as Node, TreeClickHandler, TreeIconGetter } from '../types'
 
 export interface ITreeProps<NodeData> {
     root: Node<NodeData>

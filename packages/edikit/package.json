@@ -1,6 +1,6 @@
 {
   "name": "edikit",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "A set of components and utilities to build editor like UIs",
   "repository": "git@github.com:plouc/edikit.git",
   "author": {

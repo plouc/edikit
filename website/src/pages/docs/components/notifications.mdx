@@ -14,13 +14,13 @@ import NotificationsDemo from '../../../components/demos/Notifications'
 
 ## Model
 
-```typescript
-interface INotification {
-    id: string // auto-generated when using redux
-    type: 'default' | 'success' | 'warning' | 'danger'
-    content: ReactNode
-    ttl?: number
-}
+```javascript
+ interface INotification {
+     id:      string // auto-generated when using redux
+     type:    'default' | 'success' | 'warning' | 'danger'
+     content: ReactNode
+     ttl?:    number
+ }
 ```
 
 ## Component
@@ -28,22 +28,22 @@ interface INotification {
 You can use the `Notifications` component, it accepts an array of notifications.
 
 ```javascript
-import { Notifications } from 'edikit'
+ import { Notifications } from 'edikit'
 
-const MyNotifications = () => {
-    const notifications = [
-        {
-            type: 'danger',
-            content: 'Something bad happened :/',
-        }
-    ]
+ const MyNotifications = () => {
+     const notifications = [
+         {
+             type: 'danger',
+             content: 'Something bad happened :/',
+         }
+     ]
 
-    return (
-        <Notifications
-            notifications={notifications}
-        />
-    )
-}
+     return (
+         <Notifications
+             notifications={notifications}
+         />
+     )
+ }
 ```
 
 ## Redux integration
@@ -52,53 +52,53 @@ In order to integrate the notification system to redux, you'll have to install t
 components, `notificationsReducer`, `notificationsEpic` and `notificationsMiddleware`.
 
 ```javascript
-import { combineReducers } from 'redux'
-import { combineEpics, createEpicMiddleware } from 'redux-observable'
-import {
-    notificationsReducer,
-    notificationsEpic,
-    notificationsMiddleware,
-} from 'edikit'
+ import { combineReducers } from 'redux'
+ import { combineEpics, createEpicMiddleware } from 'redux-observable'
+ import {
+     notificationsReducer,
+     notificationsEpic,
+     notificationsMiddleware,
+ } from 'edikit'
 
-const rootEpic = combineEpics(
-    // …other epics
-    notificationsEpic
-)
+ const rootEpic = combineEpics(
+     // …other epics
+     notificationsEpic
+ )
 
-const rootReducer = combineReducers({
-    // …other reducers
-    notifications: notificationsReducer,
-})
+ const rootReducer = combineReducers({
+     // …other reducers
+     notifications: notificationsReducer,
+ })
 
-const epicMiddleware = createEpicMiddleware()
-const middlewares = [
-    epicMiddleware,
-    notificationsMiddleware,
-]
+ const epicMiddleware = createEpicMiddleware()
+ const middlewares = [
+     epicMiddleware,
+     notificationsMiddleware,
+ ]
 
-const store = createStore(
-    rootReducer,
-    applyMiddleware(...middlewares)
-)
+ const store = createStore(
+     rootReducer,
+     applyMiddleware(...middlewares)
+ )
 ```
 
 Once you've setup redux to work with the notification system, you can
 use the `ConnectedNotifications` component instead of `Notifications`.
 
 ```javascript
-import { ConnectedNotifications } from 'edikit'
+ import { ConnectedNotifications } from 'edikit'
 ```
 
 ### Trigger notifications using provided action creators
 
 ```javascript
-import { triggerNotification } from 'edikit'
+ import { triggerNotification } from 'edikit'
 
-store.dispatch(triggerNotification({
-    type: 'danger',
-    content: 'Something bad happened :/',
-    ttl: 2000,
-}))
+ store.dispatch(triggerNotification({
+     type: 'danger',
+     content: 'Something bad happened :/',
+     ttl: 2000,
+ }))
 ```
 
 ### Trigger notifications from actions meta
@@ -108,15 +108,15 @@ It can be used to notify user after important events like save, delete, error…
 without having to trigger extra action.
 
 ```javascript
-store.dispatch({
-    type: 'something/CREATE_REQUEST_SUCCESS',
-    payload: something,
-    meta: {
-        notification: {
-            type: 'success',
-            content: `${something.name} successfully created`,
-            ttl: 2000,
-        },
-    },
-})
+ store.dispatch({
+     type: 'something/CREATE_REQUEST_SUCCESS',
+     payload: something,
+     meta: {
+         notification: {
+             type: 'success',
+             content: `${something.name} successfully created`,
+             ttl: 2000,
+         },
+     },
+ })
 ```

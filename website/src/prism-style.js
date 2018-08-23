@@ -1,53 +1,45 @@
-import { injectGlobal } from 'styled-components'
-
-const colors = {
-    lighter: '#373940', // light blue
-    dark: '#282c34', // dark blue
-    darker: '#20232a', // really dark blue
-    brand: '#61dafb', // electric blue
-    brandLight: '#bbeffd',
-    text: '#1a1a1a', // very dark grey / black substitute
-    subtle: '#6d6d6d', // light grey for text
-    subtleOnDark: '#999',
-    divider: '#ececec', // very light grey
-    note: '#ffe564', // yellow
-    error: '#ff6464', // yellow
-    white: '#ffffff',
-    black: '#000000',
-  };
+import { css } from 'styled-components'
 
 const prismColors = {
-  char: '#D8DEE9',
-  comment: '#999999',
-  keyword: '#c5a5c5',
-  lineHighlight: '#14161a',
-  primitive: '#5a9bcf',
-  string: '#8dc891',
-  variable: '#d7deea',
-  boolean: '#ff8b50',
-  punctuation: '#5FB3B3',
-  tag: '#fc929e',
-  function: '#79b6f2',
-  className: '#FAC863',
-  method: '#6699CC',
-  operator: '#fc929e',
-};
-
-injectGlobal`
-pre {
-  background: ${colors.dark};
-  color: ${colors.white};
-  border-radius: 10;
-  overflow: auto;
-  tab-size: 1.5em;
+    background: '#1c2738',
+    text: '#f7f8fd',
+    char: '#D8DEE9',
+    comment: '#8b9bb9',
+    keyword: '#3298ee',
+    lineHighlight: '#14161a',
+    primitive: '#2fa1f2',
+    string: '#6df1d1',
+    variable: '#d7deea',
+    boolean: '#ff997b',
+    punctuation: '#5fcfb3',
+    tag: '#ff997b',
+    function: '#7fbcf7',
+    className: '#d8fa69',
+    method: '#7fbcf7',
+    operator: '#ff997b',
 }
 
-pre > code[class*="language-"] {
-    margin: 1rem;
-    font-size: 12px !important;
-    line-height: 17px !important;
+export default css`
+pre {
+    background: ${prismColors.background};
+    color: ${prismColors.text};
+    border-radius: 3px;
+    overflow: auto;
+    tab-size: 1.5em;
+    height: auto;
+    padding: 12px 18px;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+pre > code {
     white-space: pre-wrap;
     word-break: break-word;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 20px;
 }
 
 pre + pre {

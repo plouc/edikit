@@ -10,8 +10,8 @@ export default () => (
     <ThemableDemo disableContentPadding={true}>
         <Container>
             <Builder
-                title="Builder"
-                subtitle="Builder component"
+                title="Builder title"
+                subtitle="Builder subtitle"
             >
                 <BuilderLabel withLink={true}>
                     BuilderLabel

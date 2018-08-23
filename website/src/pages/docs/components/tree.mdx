@@ -1,2 +1,58 @@
+import TreeDemo from '../../../components/demos/Tree'
+
 # Tree
+
+[model](#model) |
+[usage](#usage)
+
+The `Tree` component can be used to build elements like file explorers.
+
+<TreeDemo/>
+
+## Model
+
+The tree is built upon a single model representing a tree node, which can contain
+children to represent nested structures.
+
+```typescript
+ interface ITreeNode<Data=any> {
+     id:         string
+     type:       string
+     label:      string
+     icon?:      React.ReactNode
+     isCurrent?: boolean
+     data?:      Data
+     children?:  Array<ITreeNode<Data>>
+ }
+```
+
+## Usage
+
+```javascript
+ const MyTree = () => (
+     <Tree
+         root={{
+             id: 'root',
+             type: 'folder',
+             label: 'root',
+             children: [
+                 {
+                     id: 'file_00',
+                     type: 'file',
+                     label: 'file_00',
+                 },
+                 {
+                     id: 'file_01',
+                     type: 'file',
+                     label: 'file_01',
+                 }
+             ]
+         }}
+         openedIds={['root']}
+         onClick={() => {}}
+     />
+ )
+```
+
+
 

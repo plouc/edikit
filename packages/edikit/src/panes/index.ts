@@ -1,0 +1,6 @@
+export * from './types'
+export * from './store'
+export * from './operations'
+export { default as createConnectedPanes } from './createConnectedPanes'
+export { default as RootPane } from './components/RootPane'
+export { default as PanesManager } from './components/PanesManager'

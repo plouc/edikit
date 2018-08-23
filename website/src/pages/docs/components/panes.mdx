@@ -3,10 +3,10 @@ import PanesDemo from '../../../components/demos/Panes'
 # Panes
 
 [models](#models) | 
-[content types](#content-types) | 
-[operations](#operations) | 
-[redux integration](#redux-integration) | 
-[pane manager](#pane-manager)
+[content types](#content-types) |
+[usage](#usage) |
+[usage with redux](#usage-with-redux) |
+[operations](#operations)
 
 Panes helps arranging your app into several views, they can be split and resized.
 
@@ -17,23 +17,23 @@ Panes helps arranging your app into several views, they can be split and resized
 The pane system is built upon two models: `Pane` and `PaneContent`.
 
 ```typescript
-interface IPane<Data> {
-    id:         string        // unique identifier of the pane
-    isCurrent:  boolean
-    split:      boolean
-    splitAxis?: PaneSplitAxis // 'vertical' or 'horizontal'
-    childOf?:   string        // parent pane id
-    children:   string[]      // ids of child panes
-    contents:   Array<IPaneContent<Data>>
-}
+ interface IPane<Data> {
+     id:         string        // unique identifier of the pane
+     isCurrent:  boolean
+     split:      boolean
+     splitAxis?: PaneSplitAxis // 'vertical' or 'horizontal'
+     childOf?:   string        // parent pane id
+     children:   string[]      // ids of child panes
+     contents:   Array<IPaneContent<Data>>
+ }
 
-interface IPaneContent<Data> {
-    id:        string
-    type:      string  // id of the content type used for rendering
-    isCurrent: boolean
-    isUnique:  boolean
-    data?:     Data
-}
+ interface IPaneContent<Data> {
+     id:        string
+     type:      string  // id of the content type used for rendering
+     isCurrent: boolean
+     isUnique:  boolean
+     data?:     Data
+ }
 ```
 
 ## Content types
@@ -53,21 +53,63 @@ Content types define how a pane content should be rendered and must expose:
 Definitions:
 
 ```typescript
-interface IContentRenderContext<Data> {
-    content: IPaneContent<Data>
-    pane:    IPane<Data>
-    extra: {
-        close: () => void
-    }
-}
+ interface IContentRenderContext<Data> {
+     content: IPaneContent<Data>
+     pane:    IPane<Data>
+     extra: {
+         close: () => void
+     }
+ }
 
-interface IContentType<Data> {
-    id: string
-    renderButton: (context: IContentRenderContext<Data>) => React.ReactNode
-    renderIcon:   (context: IContentRenderContext<Data>) => React.ReactNode
-    renderPane:   (context: IContentRenderContext<Data>) => React.ReactNode
-}
+ interface IContentType<Data> {
+     id: string
+     renderButton: (context: IContentRenderContext<Data>) => React.ReactNode
+     renderIcon:   (context: IContentRenderContext<Data>) => React.ReactNode
+     renderPane:   (context: IContentRenderContext<Data>) => React.ReactNode
+ }
 ```
+
+## Usage
+
+If you plan to use **edikit** without redux, you can use the `PanesManager` component:
+
+```javascript
+ import { PanesManager, RootPanee } from 'edikit'
+
+ const contentTypes = [{
+    id: 'demo',
+    renderButton: () => 'demo content',
+    renderIcon: () => <span>D</span>,
+    renderPane: () => <div>demo content</div>,
+ }]
+
+ const panes = [{
+     id: 'root',
+     isCurrent: true,
+     contents: [{
+        id: 'demo',
+        type: 'demo',
+        isCurrent: true,
+     }],
+     children: [],
+ }]
+
+ const MyPanes = () => (
+     <PanesManager
+         panes={panes}
+         contentTypes={contentTypes}
+         render={props => <RootPane {...props}/>}
+     />
+ )
+```
+
+## Usage with Redux
+
+You can connect panes to redux store using the `createConnectedPanes` helper.
+
+### Preparing the store
+
+*@todo*
 
 ## Operations
 
@@ -85,48 +127,5 @@ which ease the process:
 | `removePaneContent`       | Remove a pane's content
 | `splitPane`               | Split a pane into two sub panes
 
-If you plan to use **edikit** without redux, you can use a top component, store panes
-inside its state and bind operations to this component:
-
-```javascript
-class MyCustomPaneManager extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            panes: [{
-                id: 'root',
-                isCurrent: true,
-                contents: [],
-                split: false,
-                splitAxis: 'vertical',
-                children: [],
-            }]
-        }
-    }
-
-    setCurrentPane = paneId => {
-        this.setState({
-            panes: setCurrentPane(this.state.panes, paneId),
-        })
-    }
-
-    // you can use the same approach for all other operations 
-
-    render() {
-        return (
-            <PaneManager
-                panes={this.state.panes}
-                root={this.state.panes.find(pane => pane.childOf === undefined)}
-                contentTypes={contentTypes}
-                setCurrentPane={this.setCurrentPane}
-                // other bound operations
-            />
-        )
-    }
-}
-```
-
-## Redux integration
-
-## Pane manager
+Those operations are bound to component methods when using `PanesManager` component and mapped
+to actions when using `createConnectedPanes`.

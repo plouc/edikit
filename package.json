@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "engineStrict": true,
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "dependencies": {
+    "lerna": "^3.1.2"
+  },
+  "workspaces": [
+    "packages/*",
+    "website"
+  ]
+}

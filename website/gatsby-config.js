@@ -23,9 +23,9 @@ module.exports = {
                 },
                 root: __dirname,
                 hastPlugins: [
-                    [prism, { ignoreMissing: true }],
                     [slug],
                     [autolinkHeadings],
+                    [prism, { ignoreMissing: false }],
                 ],
               }
         },
